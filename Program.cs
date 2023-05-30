@@ -14,19 +14,21 @@ namespace HW_9
                 Address = "hidden"
             };
 
-            Console.Write("Enter the name of property: ");
+            //Console.Write("Enter the name of property: ");
             
-            var propName = Console.ReadLine();
+            //var propName = Console.ReadLine();
 
-            GetPropertyValue(person, propName);
+            //GetPropertyValue(person, propName);
 
-            Console.Write("Enter new property value: ");
+            //Console.Write("Enter new property value: ");
 
-            object propValue = Console.ReadLine();
+            //object propValue = Console.ReadLine();
 
-            SetPropertyValue(person, propName, propValue);
+            //SetPropertyValue(person, propName, propValue);
 
-            GetPropertyValue(person, propName);
+            Console.WriteLine($"PrintObj: ");
+
+            Console.WriteLine(ObjectInfo(person));
         }
 
         public static void GetPropertyValue(object obj, string propName)
@@ -55,6 +57,22 @@ namespace HW_9
                 if (propValue != null)
                     prop.SetValue(obj, propValue);
             }
+        }
+
+        public static string ObjectInfo(object obj)
+        {
+            string objInfo = string.Empty;
+
+            Type type = obj.GetType();
+
+            var propertiesInfo = type.GetProperties();
+
+            foreach(var property in propertiesInfo)
+            {
+                objInfo += $"<{property.Name}> : <{property.GetValue(obj)}>\n";
+            }
+
+            return objInfo;
         }
     }
 }
