@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace HW_9
 {
-    internal class Person
+    public class Person
     {
+        public string Name { get; set; }
+
+        public int Id { get; set; }
+
+        public string Gender { get; set; }
+
+        public string Address { get; set; }
     }
 }
