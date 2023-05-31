@@ -14,6 +14,7 @@ namespace HW_9
                 Gender = "helicopter",
                 Address = "hidden"
             };
+            //создание объекта класса
 
             //Console.Write("Enter the name of property: ");
 
@@ -33,9 +34,9 @@ namespace HW_9
 
             var str = SerializeObject(person);
 
-            var obj = Deserealize<Person>(str);
+            var obj = Deserealize(str, typeof(Person));
 
-            Console.WriteLine();
+            var obj2 = Deserealize<Person>(str);
         }
 
         public static void GetPropertyValue(object obj, string propName)
@@ -52,6 +53,7 @@ namespace HW_9
                 }
             }
         }
+        //метод, который получает значение свойства по имени
 
         public static void SetPropertyValue(object obj, string propName, object propValue)
         {
@@ -65,6 +67,7 @@ namespace HW_9
                     prop.SetValue(obj, propValue);
             }
         }
+        //метод, который задает значение по имени свойства
 
         public static string SerializeObject(object obj)
         {
@@ -81,6 +84,7 @@ namespace HW_9
 
             return objInfo;
         }
+        //метод, который сереализует объект в строку
 
         public static object Deserealize(string str, Type type)
         {
@@ -109,10 +113,12 @@ namespace HW_9
 
             return obj;
         }
+        //метод, который создает объект и делает противоположное действие методу SerializeObject
 
         public static T Deserealize<T> (string str) 
         {
             return (T)Deserealize(str, typeof(T));
         }
+        //тот же метод что и Deserealize, но с типом Generic 
     }
 }
