@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
+using System.Runtime.InteropServices;
 
 namespace HW_9
 {
@@ -32,9 +33,9 @@ namespace HW_9
 
             var str = SerializeObject(person);
 
-            var obj = Deserealize(str, typeof(Person));
+            var obj = Deserealize<Person>(str);
 
-            Console.WriteLine(obj);
+            Console.WriteLine();
         }
 
         public static void GetPropertyValue(object obj, string propName)
@@ -107,6 +108,11 @@ namespace HW_9
             }
 
             return obj;
+        }
+
+        public static T Deserealize<T> (string str) 
+        {
+            return (T)Deserealize(str, typeof(T));
         }
     }
 }
