@@ -15,7 +15,7 @@ namespace HW_9
             };
 
             //Console.Write("Enter the name of property: ");
-            
+
             //var propName = Console.ReadLine();
 
             //GetPropertyValue(person, propName);
@@ -26,9 +26,15 @@ namespace HW_9
 
             //SetPropertyValue(person, propName, propValue);
 
-            Console.WriteLine($"PrintObj: ");
+            //Console.WriteLine($"PrintObj: ");
 
-            Console.WriteLine(ObjectInfo(person));
+            //Console.WriteLine(SerializeObject(person));
+
+            var str = SerializeObject(person);
+
+            var obj = Deserealize(str, typeof(Person));
+
+            Console.WriteLine(obj);
         }
 
         public static void GetPropertyValue(object obj, string propName)
@@ -59,7 +65,7 @@ namespace HW_9
             }
         }
 
-        public static string ObjectInfo(object obj)
+        public static string SerializeObject(object obj)
         {
             string objInfo = string.Empty;
 
@@ -73,6 +79,34 @@ namespace HW_9
             }
 
             return objInfo;
+        }
+
+        public static object Deserealize(string str, Type type)
+        {
+            Dictionary<string, object> dict = new Dictionary<string, object>();
+            str = str.Replace("<", "").Replace(">", "");
+
+            dict = str
+                .Split("\n")
+                .Select(x => x.Split(":"))
+                .Where(x => x.Length > 1)
+                .ToDictionary(x => x[0].Trim(), x => (object)(x[1].Trim()));
+
+            var obj = Activator.CreateInstance(type);
+
+            var propertiesInfo = type.GetProperties();
+
+            foreach(var property in propertiesInfo)
+            {
+                var propName = property.Name;
+
+                if(dict.Keys.Contains(propName))
+                {
+                    property.SetValue(obj, Convert.ChangeType(dict[propName], property.PropertyType));
+                }
+            }
+
+            return obj;
         }
     }
 }
