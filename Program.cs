@@ -37,6 +37,8 @@ namespace HW_9
             var obj = Deserealize(str, typeof(Person));
 
             var obj2 = Deserealize<Person>(str);
+
+            Console.WriteLine();
         }
 
         public static void GetPropertyValue(object obj, string propName)
@@ -102,7 +104,7 @@ namespace HW_9
                 .Split("\n")
                 .Select(x => x.Split(":"))
                 .Where(x => x.Length > 1)
-                .ToDictionary(x => x[0].Trim(), x => (object)(x[1].Trim()));
+                .ToDictionary(x => x[0].Trim(), x => (object)x[1].Trim());
 
             var obj = Activator.CreateInstance(type);
 
@@ -111,6 +113,13 @@ namespace HW_9
             foreach(var property in propertiesInfo)
             {
                 var propName = property.Name;
+
+                var attribute = Attribute.GetCustomAttribute(property, typeof(DisplayNameAttribute)) as DisplayNameAttribute;
+
+                if(attribute != null && attribute.Name != null)
+                {
+                    propName = attribute.Name;
+                }
 
                 if(dict.Keys.Contains(propName))
                 {
