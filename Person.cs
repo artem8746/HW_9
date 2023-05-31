@@ -1,4 +1,4 @@
-﻿using System;
+﻿    using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,10 +10,12 @@ namespace HW_9
     {
         public string Name { get; set; }
 
+        [DisplayName("Number")]
         public int Id { get; set; }
 
         public string Gender { get; set; }
 
+        [DisplayName("Living here")]
         public string Address { get; set; }
     }
 }
